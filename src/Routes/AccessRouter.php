@@ -17,10 +17,9 @@ class AccessRouter extends RouterHandler
      */
     public function route(Request $request): Response
     {
-        $data = $request->getData();
         $headers = ["Content-Type" => "application/json"];
         //GET: /access
-        if ($data['method'] === 'GET' && count($data['urlData']) === 1 && count($data['formData']) === 0) {
+        if ($request->method === 'GET' && count($request->urlData) === 1 && count($request->formData) === 0) {
             $responseData = AccessController::createReadAccessToken($this->accessHandler);
 
             return Response::fromParameters(json_encode($responseData), $headers);

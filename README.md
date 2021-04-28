@@ -43,5 +43,7 @@ Every request you want to execute from now on must include your token. If you wa
 ]
 ```
 ## Testing
-
-
+To test the app you need to run:
+```
+composer test
+```

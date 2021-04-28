@@ -8,6 +8,8 @@
 
     <php>
         <server name='HTTP_HOST' value='http://localhost' />
+        <server name='REQUEST_METHOD' value='http://localhost' />
+        <server name='REQUEST_URI' value='http://localhost' />
     </php>
 
     <testsuites>

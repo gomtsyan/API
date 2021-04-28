@@ -2,8 +2,6 @@
 
 namespace Src\Helpers;
 
-use Src\Http\Response\Response;
-
 class Utils
 {
     /**

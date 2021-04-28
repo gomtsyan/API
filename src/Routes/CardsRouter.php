@@ -17,17 +17,16 @@ class CardsRouter extends RouterHandler
      */
     public function route(Request $request): Response
     {
-        $data = $request->getData();
         $this->ensureHasReadAccess($request);
         $this->checkContentType($request);
         $headers = ["Content-Type" => "application/json"];
 
         // POST: /cards/sort
-        if ($data['method'] === 'POST' &&
-            $data['urlData'][1] === 'sort' &&
-            count($data['urlData']) === 2 &&
-            count($data['formData']) > 0) {
-            $responseData = CardsController::sort($data['formData']);
+        if ($request->method === 'POST' &&
+            $request->urlData[1] === 'sort' &&
+            count($request->urlData) === 2 &&
+            count($request->formData) > 0) {
+            $responseData = CardsController::sort($request->formData);
 
             return Response::fromParameters(json_encode($responseData), $headers);
         }

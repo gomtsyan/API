@@ -29,7 +29,7 @@ class Application
     public function run()
     {
         try {
-            $this->router->request->setData();
+            $this->router->request->setRequestData();
             $currentRouter = $this->router->getRoute();
             $response = $currentRouter->route($this->router->request);
 

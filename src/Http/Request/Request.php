@@ -7,28 +7,111 @@ use Src\Helpers\Utils;
 class Request
 {
     /**
-     * Request data
+     * Request method
+     *
+     * @var string
+     */
+    public string $method;
+
+    /**
+     * Request Form Data
      *
      * @var array
      */
-    private array $data;
+    public array $formData;
 
     /**
-     * Set Request Data.
+     * Request Url Data
+     *
+     * @var array
      */
-    public function setData()
+    public array $urlData;
+
+    /**
+     * Request Router Name
+     *
+     * @var string
+     */
+    public string $router;
+
+    /**
+     * Set Method
+     *
+     * @param string $method
+     */
+    public function setMethod(string $method)
     {
-        $this->data = $this->getRequestData();
+        $this->method = $method;
     }
 
     /**
-     * Get Request Data.
+     * Get Method
+     *
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * Set Form Data
+     *
+     * @param array $formData
+     */
+    public function setFormData(array $formData)
+    {
+        $this->formData = $formData;
+    }
+
+    /**
+     * Get Form Data
      *
      * @return array
      */
-    public function getData(): array
+    public function getFormData(): array
     {
-        return $this->data;
+        return $this->formData;
+    }
+
+    /**
+     * Set Url Data
+     *
+     * @param array $urlData
+     */
+    public function setUrlData(array $urlData)
+    {
+        $this->urlData = $urlData;
+    }
+
+    /**
+     * Get Url Data
+     *
+     * @return array
+     */
+    public function getUrlData(): array
+    {
+        return $this->urlData;
+    }
+
+    /**
+     * Set Router
+     *
+     * @param string $router
+     */
+    public function setRouter(string $router)
+    {
+        $this->router = $router;
+    }
+
+    /**
+     * Get Router
+     *
+     * @return string
+     */
+    public function getRouter(): string
+    {
+        return $this->router;
     }
 
     /**
@@ -42,13 +125,10 @@ class Request
     }
 
     /**
-     * Get Request Data.
-     *
-     * @return array
+     * set Request Data.
      */
-    private function getRequestData(): array
+    public function setRequestData()
     {
-        $method = $_SERVER['REQUEST_METHOD'];
         $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $url = trim($urlPath, '/');
         $explodedUrl = explode('/', $url);
@@ -60,11 +140,10 @@ class Request
         // removing 'api' and 'v1' elements
         $urlData = array_slice($explodedUrl, 2);
 
-        return ['method' => $method,
-            'formData' => Utils::getFormData($method),
-            'urlData' => $urlData,
-            'router' => ucfirst($urlData[0] . 'Router')
-        ];
+        $this->setMethod($_SERVER['REQUEST_METHOD']);
+        $this->setFormData(Utils::getFormData($_SERVER['REQUEST_METHOD']));
+        $this->setUrlData($urlData);
+        $this->setRouter(ucfirst($urlData[0] . 'Router'));
     }
 
     /**

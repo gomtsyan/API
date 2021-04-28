@@ -38,9 +38,8 @@ class Router
      */
     public function getRoute(): RouterHandler
     {
-        $requestData  = $this->request->getData();
-        if ($this->isValidRouter($requestData['router'])) {
-            $_router = __NAMESPACE__ . "\\" . $requestData['router'];
+        if ($this->isValidRouter($this->request->router)) {
+            $_router = __NAMESPACE__ . "\\" . $this->request->router;
             return new $_router($this->createAccessHandler());
         }
 

@@ -7,14 +7,18 @@ use Src\Http\Request\Request;
 
 class RequestTest extends TestCase
 {
-    public function testCanHandleRequest()
+    public function testRequestData()
     {
         $requestMock = $this->createMock(Request::class);
-        $requestMock->method("getHeaders")->willReturn([]);
-        $requestMock->method("getPath")->willReturn("/");
-    }
 
-    public function testCanGetRoute()
-    {
+        $requestMock->method("setMethod")->willReturn('GET');
+        $requestMock->method("setRouter")->willReturn('AccessRouter');
+        $requestMock->method("setUrlData")->willReturn([]);
+        $requestMock->method("setFormData")->willReturn([]);
+
+        $this->assertIsString($requestMock->getMethod());
+        $this->assertIsString($requestMock->getRouter());
+        $this->assertIsArray($requestMock->getUrlData());
+        $this->assertIsArray($requestMock->getFormData());
     }
 }
